@@ -1,20 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import * as Braintree from 'braintree';
+import { BRAINTREE_MERCHANT_ID, BRAINTREE_PRIVATE_KEY, BRAINTREE_PUBLIC_KEY } from '../../common/constants';
 
 @Injectable()
 export class BraintreeService {
-private connection;
+  private connection;
 
-constructor(){
-  this.connection = Braintree.connect({
-    environment: brainTreeEnv,
-    merchantId: process.env.MERCHANT_ID,
-    publicKey: process.env.PUBLIC_KEY,
-    privateKey: process.env.PRIVATE_KEY,
-});
-}
+  constructor() {
+    this.connection = Braintree.connect({
+      environment: 'dev',
+      merchantId: BRAINTREE_MERCHANT_ID,
+      publicKey: BRAINTREE_PUBLIC_KEY,
+      privateKey: BRAINTREE_PRIVATE_KEY
+    });
+  }
 
   public checkout(data) {
-    return null;
+    return this.connection;
   }
 }
