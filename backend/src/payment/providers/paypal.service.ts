@@ -1,37 +1,56 @@
 import { Injectable } from '@nestjs/common';
-import * as Stripe from 'stripe';
-import { STRIPE_API_KEY } from '../../common/constants';
+import * as paypal from 'paypal-rest-sdk';
+import { PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET } from '../../common/constants';
 
 @Injectable()
 export class PayPalService {
-  private stripe;
-
   constructor() {
-    this.stripe = new Stripe(STRIPE_API_KEY);
+    paypal.configure({
+      mode: 'sandbox',
+      client_id: PAYPAL_CLIENT_ID,
+      client_secret: PAYPAL_CLIENT_SECRET
+    });
   }
 
   public async checkout() {
-    this.stripe.customers
-      .create({
-        email: 'foo-customer@example.com'
-      })
-      .then(customer => {
-        return this.stripe.customers.createSource(customer.id, {
-          source: 'tok_visa'
-        });
-      })
-      .then(source => {
-        return this.stripe.charges.create({
-          amount: 1600,
-          currency: 'usd',
-          customer: source.customer
-        });
-      })
-      .then(charge => {
-        // New charge created on a new customer
-      })
-      .catch(err => {
-        // Deal with an error
-      });
+    const paymentData = {
+      intent: 'sale',
+      payer: {
+        payment_method: 'paypal'
+      },
+      redirect_urls: {
+        return_url: 'http://return.url',
+        cancel_url: 'http://cancel.url'
+      },
+      transactions: [
+        {
+          item_list: {
+            items: [
+              {
+                name: 'item',
+                sku: 'item',
+                price: '1.00',
+                currency: 'USD',
+                quantity: 1
+              }
+            ]
+          },
+          amount: {
+            currency: 'USD',
+            total: '1.00'
+          },
+          description: 'This is the payment description.'
+        }
+      ]
+    };
+
+    paypal.payment.create(paymentData, (error, payment) => {
+      if (error) {
+        throw error;
+      } else {
+        console.log('Create Payment Response');
+        console.log(payment);
+      }
+    });
   }
 }

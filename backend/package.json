@@ -1,7 +1,7 @@
 {
-  "name": "mevics-main-api",
-  "version": "3.0.0",
-  "description": "Mevics main api server",
+  "name": "node-react-payment-examples",
+  "version": "1.0.0",
+  "description": "node-react-payment-examples",
   "author": "Vlad Morzhanov <vlad.morzhanov@gmail.com>",
   "license": "MIT",
   "scripts": {
@@ -28,6 +28,7 @@
     "class-validator": "^0.9.1",
     "dotenv": "^6.2.0",
     "jsonwebtoken": "^8.3.0",
+    "paypal-rest-sdk": "^1.8.1",
     "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
     "rxjs": "^6.2.2",
@@ -42,6 +43,7 @@
     "@types/express": "^4.16.0",
     "@types/jest": "^23.3.1",
     "@types/node": "^10.7.1",
+    "@types/paypal-rest-sdk": "^1.7.4",
     "@types/stripe": "^6.18.0",
     "@types/supertest": "^2.0.5",
     "jest": "^23.5.0",
