@@ -3,6 +3,8 @@ logs
 *.log
 npm-debug.log*
 
+.env
+
 .idea
 
 _DS_Store

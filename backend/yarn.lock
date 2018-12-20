@@ -16,6 +16,10 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
+"@braintree/wrap-promise@1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@braintree/wrap-promise/-/wrap-promise-1.1.1.tgz#d22c76855e6d4b4012610060421fae1a37ec90b0"
+
 "@nestjs/common@^5.0.0", "@nestjs/common@^5.4.0":
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-5.5.0.tgz#6427d440f96e23c38945620fd74cb6ec61da8224"
@@ -612,6 +616,18 @@ braces@^2.3.0, braces@^2.3.1:
     split-string "^3.0.2"
     to-regex "^3.0.1"
 
+braintree@^2.14.0:
+  version "2.14.0"
+  resolved "https://registry.yarnpkg.com/braintree/-/braintree-2.14.0.tgz#3f71f6221c5a5837010cc54e3dfb8b6d22005db8"
+  dependencies:
+    "@braintree/wrap-promise" "1.1.1"
+    dateformat "1.0.1-1.2.3"
+    depd "~1.1.0"
+    readable-stream "1.1.10"
+    semver "5.1.0"
+    underscore "1.8.3"
+    xml2js "0.1.13"
+
 browser-process-hrtime@^0.1.2:
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/browser-process-hrtime/-/browser-process-hrtime-0.1.3.tgz#616f00faef1df7ec1b5bf9cfe2bdc3170f26c7b4"
@@ -1000,6 +1016,10 @@ data-urls@^1.0.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
+dateformat@1.0.1-1.2.3:
+  version "1.0.1-1.2.3"
+  resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-1.0.1-1.2.3.tgz#2e5d03039eca89f9d8797f99389de5fb0f4aa2fc"
+
 debug@2.6.9, debug@^2.1.2, debug@^2.2.0, debug@^2.3.3, debug@^2.6.8, debug@^2.6.9:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
@@ -1017,6 +1037,10 @@ debug@^3.1.0:
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.2.6.tgz#e83d17de16d8a7efb7717edbe5fb10135eee629b"
   dependencies:
     ms "^2.1.1"
+
+debuglog@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/debuglog/-/debuglog-0.0.2.tgz#6c0dcf07e2c3f74524629b741668bd46c7b362eb"
 
 decamelize@^1.1.1:
   version "1.2.0"
@@ -1081,7 +1105,7 @@ depd@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.1.tgz#5783b4e1c459f06fa5ca27f991f3d06e7a310359"
 
-depd@~1.1.1, depd@~1.1.2:
+depd@~1.1.0, depd@~1.1.1, depd@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.2.tgz#9bcd52e14c097763e749b274c4346ed2e560b5a9"
 
@@ -3549,6 +3573,15 @@ read-pkg@^1.0.0:
     normalize-package-data "^2.3.2"
     path-type "^1.0.0"
 
+readable-stream@1.1.10:
+  version "1.1.10"
+  resolved "http://registry.npmjs.org/readable-stream/-/readable-stream-1.1.10.tgz#d4dc2e5319e9c90d1e71c69390ef62cd90827f65"
+  dependencies:
+    core-util-is "~1.0.0"
+    string_decoder "~0.10.x"
+  optionalDependencies:
+    debuglog "0.0.2"
+
 readable-stream@1.1.x:
   version "1.1.14"
   resolved "http://registry.npmjs.org/readable-stream/-/readable-stream-1.1.14.tgz#7cf4c54ef648e3813084c636dd2079e166c081d9"
@@ -3760,7 +3793,7 @@ sane@^2.0.0:
   optionalDependencies:
     fsevents "^1.2.3"
 
-sax@>=0.6.0, sax@^1.2.4:
+sax@>=0.1.1, sax@>=0.6.0, sax@^1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
 
@@ -3773,6 +3806,10 @@ semver-diff@^2.0.0:
 "semver@2 || 3 || 4 || 5", semver@^5.0.1, semver@^5.0.3, semver@^5.1.0, semver@^5.3.0, semver@^5.5, semver@^5.5.0:
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.6.0.tgz#7e74256fbaa49c75aa7c7a205cc22799cac80004"
+
+semver@5.1.0:
+  version "5.1.0"
+  resolved "http://registry.npmjs.org/semver/-/semver-5.1.0.tgz#85f2cf8550465c4df000cf7d86f6b054106ab9e5"
 
 send@0.16.2:
   version "0.16.2"
@@ -4379,6 +4416,10 @@ undefsafe@^2.0.2:
   dependencies:
     debug "^2.2.0"
 
+underscore@1.8.3:
+  version "1.8.3"
+  resolved "http://registry.npmjs.org/underscore/-/underscore-1.8.3.tgz#4f3fb53b106e6097fcf9cb4109f2a5e9bdfa5022"
+
 union-value@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/union-value/-/union-value-1.0.0.tgz#5c71c34cb5bad5dcebe3ea0cd08207ba5aa1aea4"
@@ -4622,6 +4663,12 @@ xdg-basedir@^3.0.0:
 xml-name-validator@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/xml-name-validator/-/xml-name-validator-3.0.0.tgz#6ae73e06de4d8c6e47f9fb181f78d648ad457c6a"
+
+xml2js@0.1.13:
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/xml2js/-/xml2js-0.1.13.tgz#438ff3b1d85a51ad659ffc2ebe83403e10c98722"
+  dependencies:
+    sax ">=0.1.1"
 
 xml2js@^0.4.17:
   version "0.4.19"
