@@ -1,4 +1,5 @@
 export const {
+  NODE_ENV,
   PORT,
   BRAINTREE_MERCHANT_ID,
   BRAINTREE_PUBLIC_KEY,

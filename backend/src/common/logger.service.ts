@@ -1,4 +1,4 @@
-import winston from 'winston';
+import * as winston from 'winston';
 import { NODE_ENV } from './constants';
 
 const logger = winston.createLogger({
@@ -6,15 +6,15 @@ const logger = winston.createLogger({
   format: winston.format.json(),
   transports: [
     new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' }),
-  ],
+    new winston.transports.File({ filename: 'combined.log' })
+  ]
 });
 
 if (NODE_ENV !== 'production') {
   logger.add(
     new winston.transports.Console({
-      format: winston.format.simple(),
-    }),
+      format: winston.format.simple()
+    })
   );
 }
 
