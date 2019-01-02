@@ -13,44 +13,48 @@ export class PayPalService {
     });
   }
 
-  public async checkout() {
-    // const paymentData = {
-    //   intent: 'sale',
-    //   payer: {
-    //     payment_method: 'paypal'
-    //   },
-    //   redirect_urls: {
-    //     return_url: 'http://return.url',
-    //     cancel_url: 'http://cancel.url'
-    //   },
-    //   transactions: [
-    //     {
-    //       item_list: {
-    //         items: [
-    //           {
-    //             name: 'item',
-    //             sku: 'item',
-    //             price: '1.00',
-    //             currency: 'USD',
-    //             quantity: 1
-    //           }
-    //         ]
-    //       },
-    //       amount: {
-    //         currency: 'USD',
-    //         total: '1.00'
-    //       },
-    //       description: 'This is the payment description.'
-    //     }
-    //   ]
-    // };
-    // paypal.payment.create(paymentData, (error, payment) => {
-    //   if (error) {
-    //     throw error;
-    //   } else {
-    //     logger.info('Create Payment Response');
-    //     logger.info(payment);
-    //   }
-    // });
+  public async checkout({ amount }): Promise<any> {
+    const paymentData: paypal.Payment = {
+      intent: 'sale',
+      payer: {
+        payment_method: 'paypal'
+      },
+      redirect_urls: {
+        return_url: 'http://return.url',
+        cancel_url: 'http://cancel.url'
+      },
+      transactions: [
+        {
+          item_list: {
+            items: [
+              {
+                name: 'item',
+                sku: 'item',
+                price: amount,
+                currency: 'USD',
+                quantity: 1
+              }
+            ]
+          },
+          amount: {
+            currency: 'USD',
+            total: amount
+          },
+          description: 'This is the payment description.'
+        }
+      ]
+    };
+
+    return new Promise((resolve, reject) => {
+      paypal.payment.create(paymentData, (error, payment) => {
+        if (error) {
+          logger.error(`Paypal payment error: ${error}`);
+          reject(error);
+        } else {
+          logger.info(`Paypal payment successed: ${payment.id}`);
+          resolve(payment);
+        }
+      });
+    });
   }
 }

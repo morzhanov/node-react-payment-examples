@@ -17,15 +17,15 @@ export class PaymentService {
     return this.braintree.getToken();
   }
 
-  async checkoutBraintree({ email, amount, nonce }: BraintreePaymentForm): Promise<any> {
-    return this.braintree.checkout({ email, amount, nonce });
+  async checkoutBraintree(data: BraintreePaymentForm): Promise<any> {
+    return this.braintree.checkout(data);
   }
 
-  async checkoutPayPal({ email, amount }: StripePaymentForm): Promise<any> {
-    return; // TODO: implement
+  async checkoutPayPal(data: PayPalPaymentForm): Promise<any> {
+    return this.paypal.checkout(data);
   }
 
-  async checkoutStripe({ email, amount }: PayPalPaymentForm): Promise<any> {
-    return; // TODO: implement
+  async checkoutStripe(data: StripePaymentForm): Promise<any> {
+    return this.stripe.checkout(data);
   }
 }

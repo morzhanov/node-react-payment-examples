@@ -24,12 +24,22 @@ export class PaymentController {
   }
 
   @Post('stripe')
-  async checkoutStripe(@Body() data: StripePaymentForm): Promise<any> {
-    return this.paymentService.checkoutStripe(data);
+  async checkoutStripe(@Res() res, @Body() data: StripePaymentForm): Promise<any> {
+    try {
+      await this.paymentService.checkoutStripe(data);
+      res.status(200).send('Successfully paid');
+    } catch (err) {
+      res.status(400).send(err);
+    }
   }
 
   @Post('paypal')
-  async checkoutPayPal(@Body() data: PayPalPaymentForm): Promise<any> {
-    return this.paymentService.checkoutPayPal(data);
+  async checkoutPayPal(@Res() res, @Body() data: PayPalPaymentForm): Promise<any> {
+    try {
+      await this.paymentService.checkoutPayPal(data);
+      res.status(200).send('Successfully paid');
+    } catch (err) {
+      res.status(400).send(err);
+    }
   }
 }
