@@ -1,13 +1,11 @@
 import React from 'react'
-import { Route, Router, Switch } from 'react-router'
+import { Route, Router, Switch } from 'react-router-dom'
 import Home from '../components/Home/Home'
-import Profile from '../components/Profile/Profile'
 
 const router = ({ history }) => (
   <Router history={history}>
     <Switch>
       <Route exact path="/" component={Home} />
-      <Route exact path="/profile" component={Profile} />
     </Switch>
   </Router>
 )

@@ -46,10 +46,10 @@ module.exports = {
   // Enable HTTPS if the HTTPS environment variable is set to 'true'
   https: protocol === 'https',
   host,
-  overlay: false,
-  historyPaymentFallback: {
-    // Paths with dots should still use the history fallback.
-    // See https://github.com/facebookincubator/create-react-app/issues/387.
-    disableDotRule: true
-  }
+  overlay: false
+  // historyPaymentFallback: {
+  //   // Paths with dots should still use the history fallback.
+  //   // See https://github.com/facebookincubator/create-react-app/issues/387.
+  //   disableDotRule: true
+  // }
 }

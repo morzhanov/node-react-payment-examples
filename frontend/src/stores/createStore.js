@@ -1,9 +1,8 @@
 import UiStore from './uiStore'
 import RouterStore from './routerStore'
-import UserModel from '../models/UserModel'
 
-export function createStores(history, user) {
-  const uiStore = UiStore.create({ user }, { user: UserModel })
+export function createStores(history) {
+  const uiStore = UiStore.create({}, {})
   const routerStore = new RouterStore(history)
   return {
     uiStore,

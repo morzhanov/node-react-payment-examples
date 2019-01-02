@@ -1,7 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
@@ -26,13 +25,6 @@ const env = getClientEnvironment(publicUrl)
 // Development builds of React are slow and not intended for production.
 if (env.stringified['process.env'].NODE_ENV !== '"production"') {
   throw new Error('Production builds must have NODE_ENV=production.')
-}
-
-const cssFilename = 'static/css/[name].[hash:8].css'
-
-const extractTextPluginOptions = {
-  filename: cssFilename,
-  publicPath: Array(cssFilename.split('/').length).join('../')
 }
 
 // This is the production configuration.
@@ -120,13 +112,6 @@ module.exports = {
         loaders: ['babel-loader'],
         include: paths.appSrc
       },
-      {
-        test: /\.(css|sass|scss)$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader']
-        })
-      },
       { test: /\.html$/, use: 'html-loader' },
       {
         test: /\.(ico|jpg|svg|png)$/,
@@ -178,8 +163,6 @@ module.exports = {
     // It is absolutely essential that NODE_ENV was set to production here.
     // Otherwise React will be compiled in the very slow development mode.
     new webpack.DefinePlugin(env.stringified),
-    // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
-    new ExtractTextPlugin(extractTextPluginOptions),
     // Generate a manifest file which contains a mapping of all asset filenames
     // to their corresponding output file so that tools can pick it up without
     // having to parse `index.html`.
