@@ -1,6 +1,15 @@
 import React from 'react'
-import { inject, observer } from 'mobx-react'
+import { StripeProvider, Elements } from 'react-stripe-elements'
+// import StoreCheckout from './parts/StoreCheckout'
+import PaymentForm from './parts/PaymentRequestForm'
 
-const Stripe = ({ uiStore }) => <>Stripe</>
+const Stripe = () => (
+  <StripeProvider apiKey="pk_test_12345">
+    {/* <StoreCheckout /> */}
+    <Elements>
+      <PaymentForm />
+    </Elements>
+  </StripeProvider>
+)
 
-export default inject('uiStore')(observer(Stripe))
+export default Stripe
