@@ -28,14 +28,14 @@ export default class Checkout extends React.Component {
     const { elementFontSize } = this.state
     return (
       <div className="Checkout">
-        <h1>Available Elements</h1>
-        <Elements>
+        <h1>Pay with Stripe</h1>
+        {/* <Elements>
           <CardForm fontSize={elementFontSize} />
-        </Elements>
+        </Elements> */}
         <Elements>
           <SplitForm fontSize={elementFontSize} />
         </Elements>
-        <Elements>
+        {/* <Elements>
           <PaymentRequestForm />
         </Elements>
         <Elements>
@@ -43,7 +43,7 @@ export default class Checkout extends React.Component {
         </Elements>
         <Elements>
           <IdealBankForm fontSize={elementFontSize} />
-        </Elements>
+        </Elements> */}
       </div>
     )
   }
