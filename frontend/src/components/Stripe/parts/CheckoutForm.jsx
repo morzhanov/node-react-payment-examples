@@ -1,40 +1,50 @@
 import React from 'react'
-import { injectStripe } from 'react-stripe-elements'
-import AddressSection from './AddressSection'
-import CardSection from './CardSection'
+import { Elements } from 'react-stripe-elements'
+import CardForm from './CardForm'
+import SplitForm from './SplitForm'
+import PaymentRequestForm from './PaymentRequestForm'
+import IbanForm from './IbanForm'
+import IdealBankForm from './IdealBankForm'
 
-class CheckoutForm extends React.Component {
-  handleSubmit = ev => {
-    // We don't want to let default form submission happen here, which would refresh the page.
-    ev.preventDefault()
-
-    // Within the context of `Elements`, this call to createToken knows which Element to
-    // tokenize, since there's only one in this group.
-    this.props.stripe.createToken({ name: 'Jenny Rosen' }).then(({ token }) => {
-      console.log('Received Stripe token:', token)
+export default class Checkout extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      elementFontSize: window.innerWidth < 450 ? '14px' : '18px'
+    }
+    window.addEventListener('resize', () => {
+      if (window.innerWidth < 450 && this.state.elementFontSize !== '14px') {
+        this.setState({ elementFontSize: '14px' })
+      } else if (
+        window.innerWidth >= 450 &&
+        this.state.elementFontSize !== '18px'
+      ) {
+        this.setState({ elementFontSize: '18px' })
+      }
     })
-
-    // However, this line of code will do the same thing:
-    //
-    // this.props.stripe.createToken({type: 'card', name: 'Jenny Rosen'});
-
-    // You can also use createSource to create Sources. See our Sources
-    // documentation for more: https://stripe.com/docs/stripe-js/reference#stripe-create-source
-    //
-    // this.props.stripe.createSource({type: 'card', owner: {
-    //   name: 'Jenny Rosen'
-    // }});
   }
 
   render() {
+    const { elementFontSize } = this.state
     return (
-      <form onSubmit={this.handleSubmit}>
-        <AddressSection />
-        <CardSection />
-        <button>Confirm order</button>
-      </form>
+      <div className="Checkout">
+        <h1>Available Elements</h1>
+        <Elements>
+          <CardForm fontSize={elementFontSize} />
+        </Elements>
+        <Elements>
+          <SplitForm fontSize={elementFontSize} />
+        </Elements>
+        <Elements>
+          <PaymentRequestForm />
+        </Elements>
+        <Elements>
+          <IbanForm fontSize={elementFontSize} />
+        </Elements>
+        <Elements>
+          <IdealBankForm fontSize={elementFontSize} />
+        </Elements>
+      </div>
     )
   }
 }
-
-export default injectStripe(CheckoutForm)

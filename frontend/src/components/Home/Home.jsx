@@ -1,5 +1,4 @@
 import React from 'react'
-import { inject, observer } from 'mobx-react'
 import styled from '@emotion/styled'
 
 const Wrapper = styled.div`
@@ -14,6 +13,6 @@ const Wrapper = styled.div`
   font-size: 24px;
 `
 
-const Home = ({ uiStore }) => <Wrapper>Choose payment system to test</Wrapper>
+const Home = () => <Wrapper>Choose payment system to test</Wrapper>
 
-export default inject('uiStore')(observer(Home))
+export default Home

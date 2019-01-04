@@ -5,6 +5,7 @@ const host = process.env.HOST || 'localhost'
 const port = process.env.PORT || 3000
 
 module.exports = {
+  historyApiFallback: true,
   // Enable gzip compression of generated files.
   compress: true,
   // Silence WebpackDevServer's own logs since they're generally not useful.

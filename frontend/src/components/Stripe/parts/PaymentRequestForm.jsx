@@ -1,13 +1,26 @@
 import React from 'react'
-import { PaymentRequestButtonElement } from 'react-stripe-elements'
-import { injectStripe } from 'react-stripe-elements'
+import {
+  injectStripe,
+  PaymentRequestButtonElement
+} from 'react-stripe-elements'
+
+const handleBlur = () => {
+  console.log('[blur]')
+}
+const handleFocus = () => {
+  console.log('[focus]')
+}
+const handleReady = () => {
+  console.log('[ready]')
+}
+const handleClick = () => {
+  console.log('[click]')
+}
 
 class PaymentRequestForm extends React.Component {
   constructor(props) {
     super(props)
 
-    // For full documentation of the available paymentRequest options, see:
-    // https://stripe.com/docs/stripe.js#the-payment-request-object
     const paymentRequest = props.stripe.paymentRequest({
       country: 'US',
       currency: 'usd',
@@ -36,18 +49,22 @@ class PaymentRequestForm extends React.Component {
   render() {
     return this.state.canMakePayment ? (
       <PaymentRequestButtonElement
-        paymentRequest={this.state.paymentRequest}
         className="PaymentRequestButton"
+        onBlur={handleBlur}
+        onClick={handleClick}
+        onFocus={handleFocus}
+        onReady={handleReady}
+        paymentRequest={this.state.paymentRequest}
         style={{
-          // For more details on how to style the Payment Request Button, see:
-          // https://stripe.com/docs/elements/payment-request-button#styling-the-element
           paymentRequestButton: {
-            theme: 'light',
-            height: '64px'
+            theme: 'dark',
+            height: '64px',
+            type: 'donate'
           }
         }}
       />
     ) : null
   }
 }
+
 export default injectStripe(PaymentRequestForm)

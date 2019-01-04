@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Router, Switch } from 'react-router-dom'
+import { Route, Router, Switch } from 'react-router'
 import Home from '../components/Home/Home'
 import Braintree from '../components/Braintree/Braintree'
 import PayPal from '../components/PayPal/PayPal'

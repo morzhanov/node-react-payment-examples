@@ -1,14 +1,10 @@
 import React from 'react'
-import { StripeProvider, Elements } from 'react-stripe-elements'
-// import StoreCheckout from './parts/StoreCheckout'
-import PaymentForm from './parts/PaymentRequestForm'
+import { StripeProvider } from 'react-stripe-elements'
+import CheckoutForm from './parts/CheckoutForm'
 
 const Stripe = () => (
-  <StripeProvider apiKey="pk_test_12345">
-    {/* <StoreCheckout /> */}
-    <Elements>
-      <PaymentForm />
-    </Elements>
+  <StripeProvider apiKey="pk_test_6pRNASCoBOKtIshFeQd4XMUh">
+    <CheckoutForm />
   </StripeProvider>
 )
 
