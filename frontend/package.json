@@ -26,10 +26,12 @@
     "@emotion/core": "^10.0.5",
     "@emotion/styled": "^10.0.5",
     "braintree-web-drop-in": "^1.14.1",
+    "braintree-web-drop-in-react": "^1.0.5",
     "history": "^4.7.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-hot-loader": "^4.6.3",
+    "react-paypal-express-checkout": "^1.0.5",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-stripe-elements": "^2.0.1"

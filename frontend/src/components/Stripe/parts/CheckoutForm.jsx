@@ -1,10 +1,6 @@
 import React from 'react'
 import { Elements } from 'react-stripe-elements'
-import CardForm from './CardForm'
 import SplitForm from './SplitForm'
-import PaymentRequestForm from './PaymentRequestForm'
-import IbanForm from './IbanForm'
-import IdealBankForm from './IdealBankForm'
 
 export default class Checkout extends React.Component {
   constructor() {
@@ -29,21 +25,9 @@ export default class Checkout extends React.Component {
     return (
       <div className="Checkout">
         <h1>Pay with Stripe</h1>
-        {/* <Elements>
-          <CardForm fontSize={elementFontSize} />
-        </Elements> */}
         <Elements>
           <SplitForm fontSize={elementFontSize} />
         </Elements>
-        {/* <Elements>
-          <PaymentRequestForm />
-        </Elements>
-        <Elements>
-          <IbanForm fontSize={elementFontSize} />
-        </Elements>
-        <Elements>
-          <IdealBankForm fontSize={elementFontSize} />
-        </Elements> */}
       </div>
     )
   }
