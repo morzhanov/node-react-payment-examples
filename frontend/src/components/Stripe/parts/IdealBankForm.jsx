@@ -34,6 +34,7 @@ const createOptions = (fontSize, padding) => ({
 
 class IdealBankForm extends React.Component {
   handleSubmit = ev => {
+    console.log(ev)
     ev.preventDefault()
     if (this.props.stripe) {
       this.props.stripe
@@ -45,10 +46,12 @@ class IdealBankForm extends React.Component {
             name: ev.target.name.value
           },
           redirect: {
-            return_url: 'https://example.com'
+            return_url: 'http://localhost:3000'
           }
         })
-        .then(payload => console.log('[source]', payload))
+        .then(payload => {
+          console.log('[source]', payload)
+        })
     } else {
       console.log("Stripe.js hasn't loaded yet.")
     }
@@ -72,7 +75,9 @@ class IdealBankForm extends React.Component {
             {...createOptions(this.props.fontSize, '10px 14px')}
           />
         </label>
-        <button type="button">Pay</button>
+        <button onClick={this.handleSubmit} type="button">
+          Pay
+        </button>
       </form>
     )
   }

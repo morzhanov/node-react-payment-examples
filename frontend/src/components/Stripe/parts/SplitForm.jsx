@@ -93,7 +93,9 @@ class SplitForm extends React.Component {
             {...createOptions(this.props.fontSize)}
           />
         </label>
-        <button type="button">Pay</button>
+        <button onClick={this.handleSubmit} type="button">
+          Pay
+        </button>
       </form>
     )
   }
