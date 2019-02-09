@@ -25,6 +25,7 @@
   "dependencies": {
     "@emotion/core": "^10.0.5",
     "@emotion/styled": "^10.0.5",
+    "axios": "^0.18.0",
     "braintree-web-drop-in": "^1.14.1",
     "braintree-web-drop-in-react": "^1.0.5",
     "history": "^4.7.2",
