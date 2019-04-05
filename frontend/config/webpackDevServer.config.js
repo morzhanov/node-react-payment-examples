@@ -5,7 +5,6 @@ const host = process.env.HOST || 'localhost'
 const port = process.env.PORT || 3000
 
 module.exports = {
-  historyApiFallback: true,
   // Enable gzip compression of generated files.
   compress: true,
   // Silence WebpackDevServer's own logs since they're generally not useful.
@@ -47,10 +46,10 @@ module.exports = {
   // Enable HTTPS if the HTTPS environment variable is set to 'true'
   https: protocol === 'https',
   host,
-  overlay: false
-  // historyPaymentFallback: {
-  //   // Paths with dots should still use the history fallback.
-  //   // See https://github.com/facebookincubator/create-react-app/issues/387.
-  //   disableDotRule: true
-  // }
+  overlay: false,
+  historyApiFallback: {
+    // Paths with dots should still use the history fallback.
+    // See https://github.com/facebookincubator/create-react-app/issues/387.
+    disableDotRule: true
+  }
 }

@@ -1,5 +1,5 @@
-import React from 'react'
-import styled from '@emotion/styled'
+import * as React from 'react';
+import styled from '@emotion/styled';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -11,8 +11,8 @@ const Wrapper = styled.div`
   font-weight: 600;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 24px;
-`
+`;
 
-const Home = () => <Wrapper>Choose payment system to test</Wrapper>
+const Home = () => <Wrapper>Choose payment system to test</Wrapper>;
 
-export default Home
+export default Home;

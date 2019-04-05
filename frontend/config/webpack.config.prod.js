@@ -1,31 +1,44 @@
-const path = require('path')
-const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ManifestPlugin = require('webpack-manifest-plugin')
-const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
-const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const InterpolateHTMLPlugin = require('./plugins/InterpolateHTMLPlugin')
-const paths = require('./paths')
-const getClientEnvironment = require('./env')
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const InterpolateHTMLPlugin = require('./plugins/InterpolateHTMLPlugin');
+const paths = require('./paths');
+const getClientEnvironment = require('./env');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+
+const sourcePath = path.join(__dirname, './src');
+const outPath = path.join(__dirname, './dist');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
-const publicPath = paths.servedPath
+const publicPath = paths.servedPath;
 // Source maps are resource heavy and can cause out of memory issue for large source files.
-const shouldUseSourceMap = false
+const shouldUseSourceMap = false;
 // `publicUrl` is just like `publicPath`, but we will provide it to our app
 // as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
 // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
-const publicUrl = publicPath.slice(0, -1)
+const publicUrl = publicPath.slice(0, -1);
 // Get environment variables to inject into our app.
-const env = getClientEnvironment(publicUrl)
+const env = getClientEnvironment(publicUrl);
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
 if (env.stringified['process.env'].NODE_ENV !== '"production"') {
-  throw new Error('Production builds must have NODE_ENV=production.')
+  throw new Error('Production builds must have NODE_ENV=production.');
 }
+
+const cssFilename = '[name].[hash:8].css';
+
+const extractTextPluginOptions = {
+  filename: cssFilename,
+  allChunks: true,
+  publicPath: Array(cssFilename.split('/').length).join('../')
+};
 
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
@@ -36,10 +49,10 @@ module.exports = {
   mode: 'production',
   // We generate sourcemaps in production. This is slow but gives good results.
   // You can exclude the *.map files from the build during deployment.
-  devtool: shouldUseSourceMap ? 'source-map' : false,
+  devtool: false,
   // In production, we only want to load the polyfills and the app code.
   context: paths.appSrc,
-  entry: ['@babel/polyfill', './index'],
+  entry: ['@babel/polyfill', './index.tsx'],
   output: {
     // The build folder.
     path: paths.appBuild,
@@ -86,31 +99,39 @@ module.exports = {
     // https://github.com/facebookincubator/create-react-app/issues/290
     // `web` extension prefixes have been added for better support
     // for React Native Web.
-    extensions: ['.mjs', '.web.js', '.js', '.json', '.web.jsx', '.jsx'],
-    alias: {
-      // Support React Native Web
-      'react-native': 'react-native-web'
-    },
-    plugins: [
-      // Prevents users from importing files from outside of src/ (or node_modules/).
-      // This often causes confusion because we only process files within src/ with babel.
-      // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
-      // please link the files into your node_modules/ and let module-resolution kick in.
-      // Make sure your source files are compiled, as they will not be processed in any way.
-      new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson])
-    ]
+    plugins: [new TsconfigPathsPlugin()],
+    extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx']
   },
   module: {
     rules: [
       {
-        test: /\.mjs$/,
-        include: /node_modules/,
-        type: 'javascript/auto'
+        test: /\.(tsx|ts)?$/,
+        use: ['babel-loader', 'ts-loader']
       },
       {
-        test: /\.(jsx|js)?$/,
-        loaders: ['babel-loader'],
-        include: paths.appSrc
+        test: /\.(css|scss|sass)$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          allChunks: true,
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                url: true,
+                minimize: true,
+                sourceMap: false
+              }
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                url: true,
+                minimize: true,
+                sourceMap: false
+              }
+            }
+          ]
+        })
       },
       { test: /\.html$/, use: 'html-loader' },
       {
@@ -124,7 +145,7 @@ module.exports = {
         }
       },
       {
-        test: /\.(|eot|ttf|woff)$/,
+        test: /\.(|eot|ttf|woff|woff2)$/,
         use: {
           loader: 'url-loader',
           options: {
@@ -139,6 +160,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: paths.appHtml,
       filename: 'index.html',
+      inject: true,
       minify: {
         removeComments: true,
         collapseWhitespace: true,
@@ -163,6 +185,8 @@ module.exports = {
     // It is absolutely essential that NODE_ENV was set to production here.
     // Otherwise React will be compiled in the very slow development mode.
     new webpack.DefinePlugin(env.stringified),
+    // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
+    new ExtractTextPlugin(extractTextPluginOptions),
     // Generate a manifest file which contains a mapping of all asset filenames
     // to their corresponding output file so that tools can pick it up without
     // having to parse `index.html`.
@@ -181,14 +205,14 @@ module.exports = {
       logger(message) {
         if (message.indexOf('Total precache size is') === 0) {
           // This message occurs for every build and is a bit too noisy.
-          return
+          return;
         }
         if (message.indexOf('Skipping static resource') === 0) {
           // This message obscures real errors so we ignore it.
           // https://github.com/facebookincubator/create-react-app/issues/2612
-          return
+          return;
         }
-        console.log(message)
+        console.log(message);
       },
       minify: true,
       // For unknown URLs, fallback to the index page
@@ -214,4 +238,4 @@ module.exports = {
     net: 'empty',
     tls: 'empty'
   }
-}
+};
