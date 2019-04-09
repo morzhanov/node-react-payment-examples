@@ -48,7 +48,7 @@ const Braintree = () => {
           instance.current = inst;
         }}
       />
-      <button type="button" onClick={buy}>
+      <button type="button" onClick={() => buy(instance.current)}>
         Buy
       </button>
     </div>
