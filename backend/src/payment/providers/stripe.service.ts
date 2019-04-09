@@ -11,29 +11,22 @@ export class StripeService {
     this.stripe = new Stripe(STRIPE_API_KEY);
   }
 
-  public async checkout({ email, amount }): Promise<any> {
+  public async checkout({ email, source, amount }): Promise<any> {
     return new Promise((resolve, reject) => {
       this.stripe.customers
         .create({
-          email
+          email,
+          source: source.id
         })
-        .then(customer => {
-          // creating customer for simplicity
-          return this.stripe.customers.createSource(customer.id, {
-            source: 'tok_visa'
-          });
-        })
-        .then(source => {
-          return this.stripe.charges.create({
+        .then(customer =>
+          this.stripe.charges.create({
             amount,
+            description: 'Sample Charge',
             currency: 'usd',
-            customer: source.customer
-          });
-        })
-        .then(charge => {
-          logger.info(`Stripe payment successfull: ${charge.id}`);
-          resolve(charge);
-        })
+            customer: customer.id
+          })
+        )
+        .then(charge => resolve(`successfully charged ${charge}`))
         .catch(err => {
           logger.error(`Stripe payment error: ${err}`);
           reject(err);

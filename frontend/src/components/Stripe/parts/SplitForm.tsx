@@ -7,6 +7,7 @@ import {
   PostalCodeElement
 } from 'react-stripe-elements';
 import logger from '../../../helpers/logger';
+import axios from 'axios';
 
 const handleBlur = () => {
   logger.log('[blur]');
@@ -41,7 +42,7 @@ const createOptions = (fontSize: string, padding?: string) => ({
 
 interface Props {
   fontSize: string;
-  stripe: {
+  stripe?: {
     createToken: () => Promise<any>;
   };
 }
@@ -50,7 +51,14 @@ const SplitForm = ({ fontSize, stripe }: Props) => {
   const handleSubmit = (ev: any) => {
     ev.preventDefault();
     if (stripe) {
-      stripe.createToken().then((payload: any) => logger.log('[token]', payload));
+      stripe.createToken().then((payload: any) => {
+        logger.log('[token]', payload);
+        axios.post(`${process.env.API_URL}/payment/stripe`, {
+          amount: 100,
+          email: 'example.email#######@mail.com',
+          source: payload.token
+        });
+      });
     } else {
       logger.log("Stripe.js hasn't loaded yet.");
     }

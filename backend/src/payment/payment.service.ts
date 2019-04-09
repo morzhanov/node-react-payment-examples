@@ -3,7 +3,6 @@ import { BraintreeService } from './providers/braintree.service';
 import { StripeService } from './providers/stripe.service';
 import { PayPalService } from './providers/paypal.service';
 import { BraintreePaymentForm, StripePaymentForm, PayPalPaymentForm } from './payment.forms';
-import logger from '../common/logger.service';
 
 @Injectable()
 export class PaymentService {

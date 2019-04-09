@@ -19,4 +19,6 @@ export class BraintreePaymentForm extends BasePaymentForm {
 
 export class PayPalPaymentForm extends BasePaymentForm {}
 
-export class StripePaymentForm extends BasePaymentForm {}
+export class StripePaymentForm extends BasePaymentForm {
+  source: any;
+}
