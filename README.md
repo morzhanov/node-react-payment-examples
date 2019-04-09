@@ -1,4 +1,5 @@
 # node-react-payment-examples
-NodeJS + React payment examples including Stripe, PayPal and Braintree.
 
-# TBD
+<img src="https://i.imgur.com/vEc9ydj.png" />
+
+NodeJS + React payment examples including Stripe, PayPal and Braintree.
