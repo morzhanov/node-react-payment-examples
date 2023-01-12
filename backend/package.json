@@ -25,7 +25,7 @@
     "@nestjs/typeorm": "^6.1.2",
     "bcrypt-nodejs": "^0.0.3",
     "braintree": "^2.14.0",
-    "class-validator": "^0.9.1",
+    "class-validator": "^0.14.0",
     "dotenv": "^6.2.0",
     "jsonwebtoken": "^8.3.0",
     "paypal-rest-sdk": "^1.8.1",
